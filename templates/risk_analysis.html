@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Risk Analysis · SpineData Platform{% endblock %}
+{% block content %}
+
+<div class="flex flex-col">
+  <div class="flex items-center gap-space-xs text-secondary font-label-sm text-label-sm uppercase tracking-wider">
+    <span class="material-symbols-outlined text-[14px]">query_stats</span>
+    <span>Pipeline Stage: Category / Risk Analysis</span>
+  </div>
+  <h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight font-semibold mt-0.5">Risk Distribution &amp; Aggregation</h1>
+  <p class="font-body-md text-body-md text-on-surface-variant max-w-3xl">Aggregate, dataset-derived risk pattern analysis. This is an analytical view, not a medical diagnosis.</p>
+</div>
+
+<div id="risk-empty" class="bg-surface-container-low rounded p-space-lg text-on-surface-variant font-body-sm text-body-sm">
+  No dataset loaded. Go to <a class="text-primary underline" href="/">Dataset Upload</a> first.
+</div>
+
+<div id="risk-body" class="hidden flex-col gap-space-lg">
+
+  <div id="risk-dist-cards" class="grid grid-cols-1 md:grid-cols-3 gap-space-md"></div>
+
+  <div class="bg-surface-container-low rounded p-space-lg shadow-md">
+    <div class="flex items-center justify-between mb-space-sm">
+      <div class="font-label-md text-label-md font-semibold text-on-surface flex items-center gap-space-xs"><span class="material-symbols-outlined text-secondary text-[20px]">table_chart</span>Aggregation by Category</div>
+      <div class="flex items-center gap-space-sm">
+        <select id="group-select" class="bg-surface-container border border-outline-variant/40 rounded px-2 py-1 text-label-sm text-on-surface"></select>
+        <select id="agg-select" class="bg-surface-container border border-outline-variant/40 rounded px-2 py-1 text-label-sm text-on-surface"></select>
+      </div>
+    </div>
+    <div id="aggregate-table"></div>
+  </div>
+
+  <div class="bg-surface-container-low rounded p-space-lg shadow-md">
+    <div class="font-label-md text-label-md font-semibold text-on-surface mb-space-sm flex items-center gap-space-xs"><span class="material-symbols-outlined text-secondary text-[20px]">grid_view</span>Cross-tabulation vs Risk Category</div>
+    <div id="crosstab-table"></div>
+  </div>
+
+</div>
+
+{% endblock %}
+{% block scripts %}
+<script src="/static/js/risk.js"></script>
+{% endblock %}

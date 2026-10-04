@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}Dataset Upload · SpineData Platform{% endblock %}
+{% block content %}
+
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md">
+  <div class="flex flex-col">
+    <div class="flex items-center gap-space-xs text-secondary font-label-sm text-label-sm uppercase tracking-wider">
+      <span class="material-symbols-outlined text-[14px]">dataset_linked</span>
+      <span>Pipeline Stage: Ingestion</span>
+    </div>
+    <h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight font-semibold mt-0.5">Dataset Ingestion &amp; Quality Validation</h1>
+    <p class="font-body-md text-body-md text-on-surface-variant max-w-3xl">Upload a spine biomechanics / risk-assessment CSV, or load the bundled sample dataset to explore the full analytics pipeline.</p>
+  </div>
+  <div class="flex flex-wrap items-center gap-space-sm self-start lg:self-auto">
+    <button id="load-sample-btn" class="group flex items-center gap-space-xs bg-surface-container-high hover:bg-surface-variant text-primary px-space-md py-1.5 rounded transition-all shadow-sm" type="button">
+      <span class="material-symbols-outlined text-[18px] text-tertiary group-hover:rotate-180 transition-transform duration-500">sync</span>
+      <span class="font-label-md text-label-md font-medium">Load sample_spine_data.csv</span>
+    </button>
+  </div>
+</div>
+
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-md">
+  <div class="xl:col-span-7 bg-surface-container-low rounded p-space-lg flex flex-col justify-between shadow-md relative overflow-hidden">
+    <div class="flex items-center justify-between pb-space-md mb-space-md border-b border-outline-variant/20">
+      <div class="flex items-center gap-space-xs font-label-md text-label-md font-semibold text-on-surface">
+        <span class="material-symbols-outlined text-secondary text-[20px]">cloud_upload</span>
+        <span>Batch Ingestion Node</span>
+      </div>
+      <div class="flex items-center gap-space-xs font-caption text-caption text-on-surface-variant">
+        <span class="bg-surface-container px-2 py-0.5 rounded font-mono">Max: 50 MB</span>
+      </div>
+    </div>
+    <div id="dropzone-box" class="flex flex-col items-center justify-center p-space-xl bg-surface-container rounded cursor-pointer transition-all duration-200 hover:bg-surface-container-high">
+      <div class="w-14 h-14 rounded-full bg-surface-container-highest flex items-center justify-center text-secondary mb-space-sm shadow-sm">
+        <span class="material-symbols-outlined text-[32px]">upload_file</span>
+      </div>
+      <p class="font-headline-sm text-headline-sm text-on-surface text-center font-medium">
+        Drag &amp; drop your CSV dataset or <span class="text-primary underline">Browse</span>
+      </p>
+      <p class="font-body-sm text-body-sm text-on-surface-variant text-center mt-1">Accepted format: <code class="font-mono text-on-surface bg-surface-container-low px-1 py-0.5 rounded">.csv</code></p>
+      <input id="file-input" type="file" accept=".csv,.tsv" class="hidden" />
+    </div>
+    <div id="upload-status" class="mt-space-md font-body-sm text-body-sm text-on-surface-variant"></div>
+  </div>
+
+  <div class="xl:col-span-5 bg-surface-container-low rounded p-space-lg shadow-md flex flex-col gap-space-sm">
+    <div class="flex items-center gap-space-xs font-label-md text-label-md font-semibold text-on-surface">
+      <span class="material-symbols-outlined text-secondary text-[20px]">checklist</span>
+      <span>Ingestion Summary</span>
+    </div>
+    <div id="ingestion-summary" class="grid grid-cols-2 gap-space-sm">
+      <div class="bg-surface-container rounded p-space-md"><div class="font-caption text-caption text-outline uppercase">Rows</div><div id="summary-rows" class="font-headline-md text-headline-md text-on-surface font-mono">-</div></div>
+      <div class="bg-surface-container rounded p-space-md"><div class="font-caption text-caption text-outline uppercase">Columns</div><div id="summary-cols" class="font-headline-md text-headline-md text-on-surface font-mono">-</div></div>
+    </div>
+    <p class="font-body-sm text-body-sm text-on-surface-variant">Once a dataset is loaded, continue to <a class="text-primary underline" href="/data-overview">Data Overview</a> to profile missing values, duplicates, and data types before cleaning.</p>
+  </div>
+</div>
+
+<div class="bg-surface-container-low rounded p-space-lg shadow-md">
+  <div class="flex items-center gap-space-xs font-label-md text-label-md font-semibold text-on-surface mb-space-sm">
+    <span class="material-symbols-outlined text-secondary text-[20px]">table_rows</span>
+    <span>Preview</span>
+  </div>
+  <div id="preview-table"><div class="p-space-md text-on-surface-variant font-body-sm text-body-sm">No dataset loaded yet.</div></div>
+</div>
+
+{% endblock %}
+{% block scripts %}
+<script src="/static/js/upload.js"></script>
+{% endblock %}

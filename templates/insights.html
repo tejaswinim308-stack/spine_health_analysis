@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Insights &amp; Model · SpineData Platform{% endblock %}
+{% block content %}
+
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md">
+  <div class="flex flex-col">
+    <div class="flex items-center gap-space-xs text-secondary font-label-sm text-label-sm uppercase tracking-wider">
+      <span class="material-symbols-outlined text-[14px]">psychology</span>
+      <span>Pipeline Stage: Feature Engineering &amp; Model Evaluation</span>
+    </div>
+    <h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight font-semibold mt-0.5">Insights &amp; Risk Classification Model</h1>
+    <p class="font-body-md text-body-md text-on-surface-variant max-w-3xl">Two classifiers are trained and compared offline to classify <code class="font-mono bg-surface-container px-1 rounded">risk_category</code> patterns. Results are analytical / pattern-classification outputs, not a medical diagnosis.</p>
+  </div>
+  <button id="train-btn" class="flex items-center gap-space-xs bg-primary text-on-primary hover:bg-primary-container px-space-md py-1.5 rounded transition-colors shadow-sm font-label-md text-label-md font-medium" type="button">
+    <span class="material-symbols-outlined text-[18px]">model_training</span><span>Train &amp; Compare Models</span>
+  </button>
+</div>
+
+<div id="insights-empty" class="bg-surface-container-low rounded p-space-lg text-on-surface-variant font-body-sm text-body-sm">
+  No dataset loaded. Go to <a class="text-primary underline" href="/">Dataset Upload</a> first.
+</div>
+
+<div id="insights-need-target" class="hidden bg-surface-container-low rounded p-space-lg text-on-surface-variant font-body-sm text-body-sm"></div>
+
+<div id="model-loading" class="hidden bg-surface-container-low rounded p-space-lg text-on-surface-variant font-body-sm text-body-sm flex items-center gap-space-sm">
+  <span class="material-symbols-outlined spin text-[18px]">progress_activity</span> Training models on engineered features...
+</div>
+
+<div id="model-body" class="hidden flex-col gap-space-lg">
+  <div id="feature-notes" class="bg-surface-container-low rounded p-space-lg shadow-md font-body-sm text-body-sm text-on-surface-variant"></div>
+
+  <div id="model-cards" class="grid grid-cols-1 lg:grid-cols-2 gap-space-md"></div>
+
+  <div class="bg-surface-container-low rounded p-space-lg shadow-md">
+    <div class="font-label-md text-label-md font-semibold text-on-surface mb-space-sm flex items-center gap-space-xs"><span class="material-symbols-outlined text-secondary text-[20px]">leaderboard</span>Feature Importance (best model)</div>
+    <div id="importance-table"></div>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-space-md" id="confusion-matrices"></div>
+
+  <div class="bg-surface-container-low rounded p-space-lg shadow-md">
+    <div class="font-label-md text-label-md font-semibold text-on-surface mb-space-sm flex items-center gap-space-xs"><span class="material-symbols-outlined text-tertiary text-[20px]">lightbulb</span>Data-Driven Observations</div>
+    <ul id="recommendations-list" class="list-disc pl-space-lg font-body-sm text-body-sm text-on-surface-variant flex flex-col gap-1"></ul>
+    <p class="font-caption text-caption text-outline mt-space-sm">Analytical pattern output only - not medical advice or a diagnosis.</p>
+  </div>
+</div>
+
+{% endblock %}
+{% block scripts %}
+<script src="/static/js/insights.js"></script>
+{% endblock %}

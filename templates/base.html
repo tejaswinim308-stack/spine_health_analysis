@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>{% block title %}SpineData Platform{% endblock %}</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<style>
+  @layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}
+  ::-webkit-scrollbar{width:8px;height:8px;}
+  ::-webkit-scrollbar-thumb{background:#26364a;border-radius:8px;}
+  .spin{animation:spin 1s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  table.data-table th, table.data-table td{white-space:nowrap;}
+  .skel{background:linear-gradient(90deg,#102034 25%,#1b2b3f 37%,#102034 63%);background-size:400% 100%;animation:skel 1.4s ease infinite;}
+  @keyframes skel{0%{background-position:100% 50%}100%{background-position:0 50%}}
+</style>
+<script src="https://cdn.tailwindcss.com"></script>
+<script id="tailwind-config">
+tailwind.config={darkMode:"class",theme:{extend:{colors:{"surface-container":"#102034","outline":"#8c909f","surface-variant":"#26364a","tertiary-fixed-dim":"#4edea3","inverse-primary":"#005ac2","surface-container-low":"#0b1c30","on-secondary-container":"#00424e","on-secondary-fixed-variant":"#004e5c","secondary":"#4cd7f6","on-error-container":"#ffdad6","on-secondary":"#003640","surface-dim":"#031427","outline-variant":"#424754","tertiary-fixed":"#6ffbbe","secondary-fixed-dim":"#4cd7f6","background":"#031427","error":"#ffb4ab","on-error":"#690005","tertiary-container":"#00a572","on-primary-fixed-variant":"#004395","surface-container-lowest":"#000f21","on-tertiary-fixed-variant":"#005236","surface-tint":"#adc6ff","inverse-surface":"#d3e4fe","secondary-fixed":"#acedff","primary-fixed":"#d8e2ff","on-surface-variant":"#c2c6d6","on-tertiary-fixed":"#002113","error-container":"#93000a","surface":"#031427","on-surface":"#d3e4fe","on-primary-container":"#00285d","on-background":"#d3e4fe","on-secondary-fixed":"#001f26","surface-container-high":"#1b2b3f","on-primary-fixed":"#001a42","on-tertiary":"#003824","inverse-on-surface":"#213145","surface-container-highest":"#26364a","primary":"#adc6ff","primary-container":"#4d8eff","primary-fixed-dim":"#adc6ff","on-tertiary-container":"#00311f","tertiary":"#4edea3","secondary-container":"#03b5d3","surface-bright":"#2a3a4f","on-primary":"#002e6a"},borderRadius:{DEFAULT:"0.125rem",lg:"0.25rem",xl:"0.5rem",full:"0.75rem"},spacing:{"gutter-compact":"0.5rem","space-lg":"1rem","gutter":"1rem","space-xs":"0.25rem","space-md":"0.75rem","margin":"1.5rem","margin-mobile":"0.75rem","space-sm":"0.5rem","space-xl":"1.5rem"},fontFamily:{"display-lg-mobile":["Inter"],"headline-md":["Inter"],"headline-sm":["Inter"],"display-lg":["Inter"],"label-md":["Inter"],"body-md":["Inter"],"caption":["Inter"],"body-lg":["Inter"],"label-sm":["Inter"],"headline-lg":["Inter"],"body-sm":["Inter"]},fontSize:{"display-lg-mobile":["24px",{lineHeight:"32px",letterSpacing:"-0.01em",fontWeight:"600"}],"headline-md":["20px",{lineHeight:"28px",letterSpacing:"-0.01em",fontWeight:"600"}],"headline-sm":["16px",{lineHeight:"24px",letterSpacing:"-0.005em",fontWeight:"600"}],"display-lg":["32px",{lineHeight:"40px",letterSpacing:"-0.02em",fontWeight:"600"}],"label-md":["13px",{lineHeight:"18px",letterSpacing:"0.01em",fontWeight:"500"}],"body-md":["14px",{lineHeight:"20px",fontWeight:"400"}],"caption":["10px",{lineHeight:"12px",letterSpacing:"0.04em",fontWeight:"500"}],"body-lg":["16px",{lineHeight:"24px",fontWeight:"400"}],"label-sm":["11px",{lineHeight:"14px",letterSpacing:"0.02em",fontWeight:"500"}],"headline-lg":["24px",{lineHeight:"32px",letterSpacing:"-0.015em",fontWeight:"600"}],"body-sm":["12px",{lineHeight:"16px",fontWeight:"400"}]}}}}
+</script>
+</head>
+<body class="bg-surface text-on-surface font-body-md text-body-md antialiased selection:bg-primary selection:text-on-primary min-h-screen">
+
+<header class="fixed top-0 left-0 right-0 h-14 bg-surface-container-low/95 backdrop-blur-md z-50 px-margin flex items-center justify-between shadow-[0_1px_8px_rgba(0,0,0,0.4)]">
+  <div class="flex items-center gap-space-md">
+    <div class="h-8 w-8 rounded bg-primary flex items-center justify-center">
+      <span class="material-symbols-outlined text-on-primary text-[20px]">spa</span>
+    </div>
+    <div class="flex items-baseline gap-space-xs">
+      <span class="font-headline-sm text-headline-sm text-on-surface tracking-tight font-semibold">SpineData Platform</span>
+      <span class="font-caption text-caption px-1.5 py-0.5 rounded bg-surface-container-high text-primary tracking-wider uppercase font-semibold">Analytics Build</span>
+    </div>
+    <div class="hidden xl:flex items-center gap-space-xs bg-surface-container px-space-sm py-1 rounded border border-outline-variant/40">
+      <span id="status-dot" class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+      <span id="status-text" class="font-caption text-caption text-on-surface-variant font-mono">No dataset loaded</span>
+    </div>
+  </div>
+  <div class="flex items-center gap-space-md">
+    <div class="hidden md:flex items-center gap-1.5 bg-surface-container px-space-sm py-1 rounded border border-outline-variant/40 text-on-surface-variant font-label-sm text-label-sm">
+      <span class="material-symbols-outlined text-[16px] text-secondary">memory</span>
+      <span>Python / Pandas / SQLite Engine</span>
+    </div>
+    <div class="flex items-center gap-space-sm pl-space-xs border-l border-outline-variant/40">
+      <div class="hidden lg:flex flex-col text-right">
+        <span class="font-label-sm text-label-sm text-on-surface leading-tight font-medium">Analytics Workstation</span>
+        <span class="font-caption text-caption text-on-surface-variant leading-tight">Risk Assessment &amp; Pattern Analysis</span>
+      </div>
+      <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
+        <span class="material-symbols-outlined text-on-primary text-[18px]">person</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<aside class="fixed left-0 top-14 bottom-0 w-64 bg-surface-container-low/95 z-40 flex flex-col justify-between p-space-md shadow-[1px_0_12px_rgba(0,0,0,0.2)]">
+  <div class="flex flex-col gap-space-sm">
+    <div class="px-space-sm py-space-xs">
+      <span class="font-caption text-caption uppercase tracking-wider text-outline font-semibold">Analytics Workstation</span>
+    </div>
+    <nav class="flex flex-col gap-1">
+      {% macro navlink(path, icon, label) -%}
+      <a href="/{{ '' if path == 'dataset-upload' else path }}"
+         class="flex items-center gap-space-sm px-space-sm py-2 rounded transition-all font-label-md text-label-md
+                {{ 'bg-primary-container text-on-primary-container font-semibold shadow-sm' if active == path else 'text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface' }}">
+        <span class="material-symbols-outlined text-[20px]">{{ icon }}</span>
+        <span>{{ label }}</span>
+      </a>
+      {%- endmacro %}
+      {{ navlink('dataset-upload', 'upload_file', 'Dataset Upload') }}
+      {{ navlink('data-overview', 'dataset', 'Data Overview') }}
+      {{ navlink('eda-dashboard', 'analytics', 'EDA Dashboard') }}
+      {{ navlink('sql-insights', 'database', 'SQL Insights') }}
+      {{ navlink('risk-analysis', 'query_stats', 'Risk Analysis') }}
+      {{ navlink('insights', 'psychology', 'Insights & Model') }}
+      {{ navlink('export', 'ios_share', 'Export') }}
+    </nav>
+  </div>
+  <div class="p-space-sm bg-surface-container rounded border border-outline-variant/30 flex flex-col gap-1">
+    <div class="flex items-center justify-between text-on-surface-variant font-caption text-caption">
+      <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-tertiary"></span>Engine Ready</span>
+    </div>
+    <div class="flex items-center justify-between text-on-surface-variant font-caption text-caption mt-1">
+      <span class="text-outline">Rows loaded:</span>
+      <span id="sidebar-rowcount" class="font-mono text-on-surface">0</span>
+    </div>
+  </div>
+</aside>
+
+<div class="pl-64">
+  <main class="w-full pt-14 bg-surface min-h-screen">
+    <div class="flex flex-col w-full">
+      <div class="px-margin py-space-lg flex flex-col gap-space-lg">
+        {% block content %}{% endblock %}
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="/static/js/app.js"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

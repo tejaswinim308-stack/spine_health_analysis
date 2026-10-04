@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}EDA Dashboard · SpineData Platform{% endblock %}
+{% block content %}
+
+<div class="flex flex-col">
+  <div class="flex items-center gap-space-xs text-secondary font-label-sm text-label-sm uppercase tracking-wider">
+    <span class="material-symbols-outlined text-[14px]">analytics</span>
+    <span>Pipeline Stage: Exploratory Data Analysis</span>
+  </div>
+  <h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight font-semibold mt-0.5">EDA Dashboard</h1>
+  <p class="font-body-md text-body-md text-on-surface-variant max-w-3xl">Descriptive statistics, outlier analysis (IQR method), correlation analysis, and Matplotlib visualizations computed live from the active dataset.</p>
+</div>
+
+<div id="eda-empty" class="bg-surface-container-low rounded p-space-lg text-on-surface-variant font-body-sm text-body-sm">
+  No dataset loaded. Go to <a class="text-primary underline" href="/">Dataset Upload</a> first.
+</div>
+
+<div id="eda-body" class="hidden flex-col gap-space-lg">
+
+  <div class="bg-surface-container-low rounded p-space-lg shadow-md">
+    <div class="font-label-md text-label-md font-semibold text-on-surface mb-space-sm flex items-center gap-space-xs"><span class="material-symbols-outlined text-secondary text-[20px]">functions</span>Descriptive Statistics</div>
+    <div id="stats-table"></div>
+  </div>
+
+  <div class="bg-surface-container-low rounded p-space-lg shadow-md">
+    <div class="font-label-md text-label-md font-semibold text-on-surface mb-space-sm flex items-center gap-space-xs"><span class="material-symbols-outlined text-error text-[20px]">warning</span>Outlier Analysis (IQR method)</div>
+    <div id="outlier-table"></div>
+  </div>
+
+  <div class="grid grid-cols-1 xl:grid-cols-2 gap-space-md">
+    <div class="bg-surface-container-low rounded p-space-lg shadow-md">
+      <div class="font-label-md text-label-md font-semibold text-on-surface mb-space-sm flex items-center gap-space-xs"><span class="material-symbols-outlined text-secondary text-[20px]">grid_on</span>Correlation Heatmap</div>
+      <div id="corr-chart" class="skel h-64 rounded"></div>
+    </div>
+    <div class="bg-surface-container-low rounded p-space-lg shadow-md">
+      <div class="flex items-center justify-between mb-space-sm">
+        <div class="font-label-md text-label-md font-semibold text-on-surface flex items-center gap-space-xs"><span class="material-symbols-outlined text-secondary text-[20px]">bar_chart</span>Distribution</div>
+        <select id="hist-col-select" class="bg-surface-container border border-outline-variant/40 rounded px-2 py-1 text-label-sm text-on-surface"></select>
+      </div>
+      <div id="hist-chart" class="skel h-64 rounded"></div>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 xl:grid-cols-2 gap-space-md">
+    <div class="bg-surface-container-low rounded p-space-lg shadow-md">
+      <div class="font-label-md text-label-md font-semibold text-on-surface mb-space-sm flex items-center gap-space-xs"><span class="material-symbols-outlined text-secondary text-[20px]">scatter_plot</span>Feature Relationship</div>
+      <div id="scatter-chart" class="skel h-64 rounded"></div>
+    </div>
+    <div class="bg-surface-container-low rounded p-space-lg shadow-md">
+      <div class="font-label-md text-label-md font-semibold text-on-surface mb-space-sm flex items-center gap-space-xs"><span class="material-symbols-outlined text-secondary text-[20px]">candlestick_chart</span>Boxplot by Category</div>
+      <div id="box-chart" class="skel h-64 rounded"></div>
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}
+{% block scripts %}
+<script src="/static/js/eda.js"></script>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Data Overview · SpineData Platform{% endblock %}
+{% block content %}
+
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md">
+  <div class="flex flex-col">
+    <div class="flex items-center gap-space-xs text-secondary font-label-sm text-label-sm uppercase tracking-wider">
+      <span class="material-symbols-outlined text-[14px]">dataset</span>
+      <span>Pipeline Stage: Profiling &amp; Cleaning</span>
+    </div>
+    <h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight font-semibold mt-0.5">Data Overview</h1>
+    <p class="font-body-md text-body-md text-on-surface-variant max-w-3xl">Column types, missing values, and duplicate rows detected in the active dataset - then run the cleaning pipeline.</p>
+  </div>
+  <button id="clean-btn" class="flex items-center gap-space-xs bg-primary text-on-primary hover:bg-primary-container px-space-md py-1.5 rounded transition-colors shadow-sm font-label-md text-label-md font-medium" type="button">
+    <span class="material-symbols-outlined text-[18px]">auto_fix_high</span>
+    <span>Run Cleaning Pipeline</span>
+  </button>
+</div>
+
+<div id="overview-empty" class="bg-surface-container-low rounded p-space-lg text-on-surface-variant font-body-sm text-body-sm">
+  No dataset loaded. Go to <a class="text-primary underline" href="/">Dataset Upload</a> first.
+</div>
+
+<div id="overview-body" class="hidden flex-col gap-space-lg">
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-space-md">
+    <div class="bg-surface-container-low rounded p-space-md shadow-sm"><div class="font-caption text-caption text-outline uppercase">Rows</div><div id="kpi-rows" class="font-headline-md text-headline-md font-mono text-on-surface">-</div></div>
+    <div class="bg-surface-container-low rounded p-space-md shadow-sm"><div class="font-caption text-caption text-outline uppercase">Columns</div><div id="kpi-cols" class="font-headline-md text-headline-md font-mono text-on-surface">-</div></div>
+    <div class="bg-surface-container-low rounded p-space-md shadow-sm"><div class="font-caption text-caption text-outline uppercase">Duplicate Rows</div><div id="kpi-dupes" class="font-headline-md text-headline-md font-mono text-secondary">-</div></div>
+    <div class="bg-surface-container-low rounded p-space-md shadow-sm"><div class="font-caption text-caption text-outline uppercase">Columns w/ Missing</div><div id="kpi-missing-cols" class="font-headline-md text-headline-md font-mono text-tertiary">-</div></div>
+  </div>
+
+  <div class="grid grid-cols-1 xl:grid-cols-2 gap-space-md">
+    <div class="bg-surface-container-low rounded p-space-lg shadow-md">
+      <div class="font-label-md text-label-md font-semibold text-on-surface mb-space-sm flex items-center gap-space-xs"><span class="material-symbols-outlined text-secondary text-[20px]">schema</span>Data Types</div>
+      <div id="dtype-table"></div>
+    </div>
+    <div class="bg-surface-container-low rounded p-space-lg shadow-md">
+      <div class="font-label-md text-label-md font-semibold text-on-surface mb-space-sm flex items-center gap-space-xs"><span class="material-symbols-outlined text-tertiary text-[20px]">report</span>Missing Values</div>
+      <div id="missing-table"></div>
+    </div>
+  </div>
+
+  <div class="bg-surface-container-low rounded p-space-lg shadow-md">
+    <div class="font-label-md text-label-md font-semibold text-on-surface mb-space-sm flex items-center gap-space-xs"><span class="material-symbols-outlined text-secondary text-[20px]">content_copy</span>Duplicate Rows (sample)</div>
+    <div id="dupe-table"></div>
+  </div>
+
+  <div id="cleaning-log-card" class="hidden bg-surface-container-low rounded p-space-lg shadow-md border border-tertiary/30">
+    <div class="font-label-md text-label-md font-semibold text-tertiary mb-space-sm flex items-center gap-space-xs"><span class="material-symbols-outlined text-[20px]">task_alt</span>Cleaning Log</div>
+    <ul id="cleaning-log" class="list-disc pl-space-lg font-body-sm text-body-sm text-on-surface-variant flex flex-col gap-1"></ul>
+  </div>
+
+  <div class="bg-surface-container-low rounded p-space-lg shadow-md">
+    <div class="font-label-md text-label-md font-semibold text-on-surface mb-space-sm flex items-center gap-space-xs"><span class="material-symbols-outlined text-secondary text-[20px]">table_rows</span>Dataset Preview</div>
+    <div id="preview-table"></div>
+  </div>
+</div>
+
+{% endblock %}
+{% block scripts %}
+<script src="/static/js/overview.js"></script>
+{% endblock %}

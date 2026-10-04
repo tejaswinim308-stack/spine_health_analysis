@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}SQL Insights · SpineData Platform{% endblock %}
+{% block content %}
+
+<div class="flex flex-col">
+  <div class="flex items-center gap-space-xs text-secondary font-label-sm text-label-sm uppercase tracking-wider">
+    <span class="material-symbols-outlined text-[14px]">database</span>
+    <span>Pipeline Stage: SQL Storage &amp; Analysis</span>
+  </div>
+  <h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight font-semibold mt-0.5">SQL Insights</h1>
+  <p class="font-body-md text-body-md text-on-surface-variant max-w-3xl">The active dataset is persisted into a real SQLite database. Every query below executes against that table - run the examples or write your own <code class="font-mono bg-surface-container px-1 rounded">SELECT</code>.</p>
+</div>
+
+<div id="sql-empty" class="bg-surface-container-low rounded p-space-lg text-on-surface-variant font-body-sm text-body-sm">
+  No dataset loaded. Go to <a class="text-primary underline" href="/">Dataset Upload</a> first.
+</div>
+
+<div id="sql-body" class="hidden flex-col gap-space-lg">
+
+  <div class="bg-surface-container-low rounded p-space-lg shadow-md">
+    <div class="font-label-md text-label-md font-semibold text-on-surface mb-space-sm flex items-center gap-space-xs"><span class="material-symbols-outlined text-secondary text-[20px]">terminal</span>Quick SQL Console <span class="font-caption text-caption text-outline">(SELECT only)</span></div>
+    <textarea id="sql-input" rows="3" class="w-full bg-surface-container-lowest border border-outline-variant/40 rounded p-space-sm font-mono text-body-sm text-on-surface" placeholder="SELECT risk_category, COUNT(*) FROM patients GROUP BY risk_category"></textarea>
+    <div class="flex items-center justify-between mt-space-sm">
+      <span id="sql-error" class="font-body-sm text-body-sm text-error"></span>
+      <button id="run-sql-btn" class="flex items-center gap-space-xs bg-primary text-on-primary hover:bg-primary-container px-space-md py-1.5 rounded transition-colors shadow-sm font-label-md text-label-md font-medium" type="button">
+        <span class="material-symbols-outlined text-[18px]">play_arrow</span><span>Run Query</span>
+      </button>
+    </div>
+    <div id="sql-result" class="mt-space-md"></div>
+  </div>
+
+  <div class="font-label-md text-label-md font-semibold text-on-surface flex items-center gap-space-xs">
+    <span class="material-symbols-outlined text-secondary text-[20px]">library_books</span>Example Analytical Queries
+  </div>
+  <div id="examples-container" class="flex flex-col gap-space-md"></div>
+</div>
+
+{% endblock %}
+{% block scripts %}
+<script src="/static/js/sql.js"></script>
+{% endblock %}

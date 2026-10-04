@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Export · SpineData Platform{% endblock %}
+{% block content %}
+
+<div class="flex flex-col">
+  <div class="flex items-center gap-space-xs text-secondary font-label-sm text-label-sm uppercase tracking-wider">
+    <span class="material-symbols-outlined text-[14px]">ios_share</span>
+    <span>Pipeline Stage: Export</span>
+  </div>
+  <h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight font-semibold mt-0.5">Export Cleaned Data &amp; Results</h1>
+  <p class="font-body-md text-body-md text-on-surface-variant max-w-3xl">Download the cleaned dataset, an R-friendly extract, and a Tableau / Power BI-ready CSV. All exports use the currently cleaned dataset (or the raw upload if cleaning hasn't been run yet).</p>
+</div>
+
+<div id="export-empty" class="bg-surface-container-low rounded p-space-lg text-on-surface-variant font-body-sm text-body-sm">
+  No dataset loaded. Go to <a class="text-primary underline" href="/">Dataset Upload</a> first.
+</div>
+
+<div id="export-body" class="hidden grid-cols-1 md:grid-cols-3 gap-space-md">
+  <a href="/api/export/cleaned-csv" class="bg-surface-container-low rounded p-space-lg shadow-md flex flex-col gap-space-sm hover:bg-surface-container-high transition-colors">
+    <span class="material-symbols-outlined text-secondary text-[28px]">description</span>
+    <span class="font-label-md text-label-md font-semibold text-on-surface">Cleaned Dataset (.csv)</span>
+    <span class="font-body-sm text-body-sm text-on-surface-variant">Full cleaned table, ready for general use.</span>
+  </a>
+  <a href="/api/export/r-csv" class="bg-surface-container-low rounded p-space-lg shadow-md flex flex-col gap-space-sm hover:bg-surface-container-high transition-colors">
+    <span class="material-symbols-outlined text-tertiary text-[28px]">code</span>
+    <span class="font-label-md text-label-md font-semibold text-on-surface">R-Compatible Export (.csv)</span>
+    <span class="font-body-sm text-body-sm text-on-surface-variant">Syntactically valid column names for <code class="font-mono">read.csv()</code>.</span>
+  </a>
+  <a href="/api/export/bi-csv" class="bg-surface-container-low rounded p-space-lg shadow-md flex flex-col gap-space-sm hover:bg-surface-container-high transition-colors">
+    <span class="material-symbols-outlined text-primary text-[28px]">query_stats</span>
+    <span class="font-label-md text-label-md font-semibold text-on-surface">Tableau / Power BI Extract (.csv)</span>
+    <span class="font-body-sm text-body-sm text-on-surface-variant">Flat, BI-tool friendly headers and encoding.</span>
+  </a>
+</div>
+
+<div id="summary-section" class="hidden flex-col gap-space-md">
+  <div class="flex items-center justify-between">
+    <div class="font-label-md text-label-md font-semibold text-on-surface flex items-center gap-space-xs"><span class="material-symbols-outlined text-secondary text-[20px]">summarize</span>Analytical Summary Report (JSON)</div>
+    <a id="download-summary" href="#" download="analysis_summary.json" class="text-primary underline font-label-sm text-label-sm">Download JSON</a>
+  </div>
+  <pre id="summary-json" class="bg-surface-container-lowest rounded p-space-md font-mono text-body-sm text-on-surface-variant overflow-x-auto max-h-96"></pre>
+</div>
+
+{% endblock %}
+{% block scripts %}
+<script src="/static/js/export.js"></script>
+{% endblock %}
